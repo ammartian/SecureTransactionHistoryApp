@@ -4,7 +4,7 @@ import tw from "twrnc"
 
 type CustomeHeaderProps = {
     header: string;
-    size?: string;
+    size?: "sm" | "base" | "lg" | "xl";
     style?: object;
 }
 

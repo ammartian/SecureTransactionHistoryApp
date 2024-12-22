@@ -176,3 +176,4 @@ export const transactions = [
     }
 ]; 
 
+export default transactions;
