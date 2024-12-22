@@ -56,4 +56,4 @@ Join our community of developers creating universal apps.
 - Tailwind React Native Classnames(twrnc): https://www.npmjs.com/package/twrnc
 - ChatGPT: \*\*to speed up learning process
 - Authentication: https://www.youtube.com/watch?v=iE6dJZAkih0
--
+- Tailwind: https://tailwindcss.com/docs/installation
