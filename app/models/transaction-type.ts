@@ -1,4 +1,4 @@
-export type TransactionType = {
+export default interface TransactionType {
     id: string;
     amount: number;
     date: string;

@@ -10,8 +10,8 @@
 import React, { useState } from "react";
 import tw from "twrnc";
 import { transactions as InitialTransactions } from "./data/transactions";
-import { sortByLatestDate } from "./utils/sorting";
-import { formatDate } from "./utils/formatDate";
+import sortByLatestDate from "./utils/sortDate";
+import formatDate from "./utils/formatDate";
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList, View, Text, TouchableOpacity, RefreshControl } from "react-native";
@@ -86,9 +86,7 @@ export default function TransactionHistoryScreen() {
                     <TouchableOpacity style={tw`flex-row items-center pb-4 pr-4`} onPress={displaySensitiveInfo}>
                         <View style={tw`px-6 py-2 bg-gray-300 rounded-lg`}>
                             {/* Toggle icon */}
-                            {isDisplayed ?
-                                <Entypo name="eye" size={16} color="black" />
-                                : <Entypo name="eye-with-line" size={16} color="black" />}
+                            <Entypo name={isDisplayed ? "eye" : "eye-with-line"} size={16} color="black" />
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -98,6 +96,7 @@ export default function TransactionHistoryScreen() {
                     <FlatList
                         data={transactions}
                         keyExtractor={(item) => item.id}
+                        ListEmptyComponent={<Text style={tw`text-center text-gray-500 p-4`}>No transaction available</Text>} // empty data fallback view
                         renderItem={({ item, index }) => (
                             <TouchableOpacity
                                 style={tw`flex-1 flex-row justify-between p-5 ${index % 2 === 0 ? "bg-slate-50" : "bg-slate-100"}`}
@@ -109,9 +108,7 @@ export default function TransactionHistoryScreen() {
                                 </View>
                                 <View style={tw`flex-col flex-wrap max-w-[50%] justify-between items-end pt-1`}>
                                     {/* Toggle amount visibility */}
-                                    {isDisplayed ?
-                                        <CustomHeader header={`RM ${item.amount}`} size="base" />
-                                        : <CustomHeader header="RM ***" size="base" />}
+                                    <CustomHeader header={isDisplayed ? `RM ${item.amount}` : "RM ***"} size="base" />
                                     <AntDesign name="right" size={16} style={tw`self-end text-slate-400`} />
                                 </View>
                             </TouchableOpacity>
