@@ -9,10 +9,12 @@
 
 import React, { useState } from "react";
 import tw from "twrnc";
-import { transactions } from "./data/transactions";
+import { transactions as InitialTransactions } from "./data/transactions";
+import { sortByLatestDate } from "./utils/sorting";
+import { formatDate } from "./utils/formatDate";
 
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FlatList, View, Text, TouchableOpacity } from "react-native";
+import { FlatList, View, Text, TouchableOpacity, RefreshControl } from "react-native";
 import CustomHeader from "./components/CustomHeader";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -22,15 +24,8 @@ export default function TransactionHistoryScreen() {
 
     const [isDisplayed, setIsDisplayed] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-    // Helper function to transform date format
-    const formatDate = (dateString: string): string => {
-        const date = new Date(dateString);
-        const day = String(date.getDate()).padStart(2, '0'); // ensure it's always 2 digit
-        const month = date.toLocaleString('en-US', { month: 'short' }); // converts month into short name
-        const year = date.getFullYear(); // get full year
-        return `${day} ${month} ${year}`; // return re-arranged template literal 
-    };
+    const [refreshing, setRefreshing] = useState(false);
+    const [transactions, setTransactions] = useState(() => sortByLatestDate(InitialTransactions)) // sort data in descending order
 
     // Handle authentication
     const authenticateUserAndSetState = async () => {
@@ -64,6 +59,21 @@ export default function TransactionHistoryScreen() {
         }
     }
 
+    // Handle refresh
+    const onRefresh = async () => {
+        setRefreshing(true); // start loading animation
+
+        // Simulate data fetching with delay
+        try {
+            // Data fetch with 2s delay
+            await new Promise((resolve) => setTimeout(resolve, 2000));
+        } catch (error) {
+            console.error("Error Fetching Data", error);
+        } finally {
+            setRefreshing(false); // stop loading animation
+        }
+    }
+
 
     return (
         <SafeAreaView style={tw`flex-1 items-center bg-slate-50`}>
@@ -75,6 +85,7 @@ export default function TransactionHistoryScreen() {
 
                     <TouchableOpacity style={tw`flex-row items-center pb-4 pr-4`} onPress={displaySensitiveInfo}>
                         <View style={tw`px-6 py-2 bg-gray-300 rounded-lg`}>
+                            {/* Toggle icon */}
                             {isDisplayed ?
                                 <Entypo name="eye" size={16} color="black" />
                                 : <Entypo name="eye-with-line" size={16} color="black" />}
@@ -97,6 +108,7 @@ export default function TransactionHistoryScreen() {
                                     <Text>{formatDate(item.date)}</Text>
                                 </View>
                                 <View style={tw`flex-col flex-wrap max-w-[50%] justify-between items-end pt-1`}>
+                                    {/* Toggle amount visibility */}
                                     {isDisplayed ?
                                         <CustomHeader header={`RM ${item.amount}`} size="base" />
                                         : <CustomHeader header="RM ***" size="base" />}
@@ -104,6 +116,7 @@ export default function TransactionHistoryScreen() {
                                 </View>
                             </TouchableOpacity>
                         )}
+                        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                     />
                 </View>
             </View>
