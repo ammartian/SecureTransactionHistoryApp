@@ -132,7 +132,7 @@ export default function TransactionHistoryScreen() {
                                 onPress={() => handleTransactionDetailNavigation(item)}>
                                 <View style={tw`flex-col flex-wrap max-w-[50%]`}>
                                     <CustomHeader header={item.description} size="lg" style={tw`mt-0 mb-0`} />
-                                    {item.type && (<Text>{item.type}</Text>)}
+                                    {item.paymentMethod && (<Text>{item.paymentMethod}</Text>)}
                                     <Text>{formatDate(item.date)}</Text>
                                 </View>
                                 <View style={tw`flex-col flex-wrap max-w-[50%] justify-between items-end pt-1`}>

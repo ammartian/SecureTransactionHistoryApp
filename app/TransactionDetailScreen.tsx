@@ -23,8 +23,10 @@ export default function TransactionDetailScreen() {
                     <View>
                         <CustomHeader header={transactionData.description} />
                         <CustomHeader header={transactionData.amount} size="lg" />
-                        <CustomHeader header={transactionData.type} size="lg" />
+                        <CustomHeader header={transactionData.paymentMethod} size="lg" />
                         <CustomHeader header={formatDate(transactionData.date)} size="lg" />
+                        <CustomHeader header={transactionData.direction} size="lg" />
+                        <CustomHeader header={transactionData.status} size="lg" />
                         <CustomHeader header={transactionData.id} size="lg" />
                     </View>
                 ) : (

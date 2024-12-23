@@ -3,5 +3,7 @@ export default interface TransactionType {
     amount: number;
     date: string;
     description: string;
-    type: string;
+    direction: string;
+    paymentMethod: string;
+    status: string;
 }
