@@ -1,17 +1,13 @@
 // Transaction History Screen
 
 // TODO:
-// Import all of the data in FlatList
-// Mask and unmasked function + authenticate check
-// Authentication fallback
-// Pull to refresh
-// Transaction Details + authenticate check
+// Update UI
+// Last: Clean up code and improvise 
 
 import React, { useState } from "react";
 import tw from "twrnc";
 import { transactions as InitialTransactions } from "./data/transactions";
-import sortByLatestDate from "./utils/sortDate";
-import formatDate from "./utils/formatDate";
+import { sortByLatestDate, formatDate } from "./utils/utils";
 import { useRouter } from "expo-router";
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -120,7 +116,7 @@ export default function TransactionHistoryScreen() {
                 </View>
 
                 {/* FlatList */}
-                <View style={tw`border-2 border-slate-300 rounded-lg overflow-hidden mb-16`}>
+                <View style={tw`border-2 border-slate-300 rounded-lg overflow-hidden`}>
                     <FlatList
                         data={transactions}
                         keyExtractor={(item) => item.id}
@@ -131,11 +127,11 @@ export default function TransactionHistoryScreen() {
                                 // Navigate to Transaction Detail
                                 onPress={() => handleTransactionDetailNavigation(item)}>
                                 <View style={tw`flex-col flex-wrap max-w-[50%]`}>
-                                    <CustomHeader header={item.description} size="lg" style={tw`mt-0 mb-0`} />
+                                    <CustomHeader header={item.description} size="lg" style={tw`mb-1`} />
                                     {item.paymentMethod && (<Text>{item.paymentMethod}</Text>)}
                                     <Text>{formatDate(item.date)}</Text>
                                 </View>
-                                <View style={tw`flex-col flex-wrap max-w-[50%] justify-between items-end pt-1`}>
+                                <View style={tw`flex-col flex-wrap max-w-[50%] justify-between items-end`}>
                                     {/* Toggle amount visibility */}
                                     <CustomHeader header={isDisplayed ? `RM ${item.amount}` : "RM ***"} size="base" />
                                     <AntDesign name="right" size={16} style={tw`self-end text-slate-400`} />

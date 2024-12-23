@@ -11,6 +11,6 @@ type CustomeHeaderProps = {
 
 export default function CustomHeader({ header, size = "xl", style }: CustomeHeaderProps) {
     return (
-        <Text style={[tw`text-${size} font-bold mb-4 self-start`, style]}>{header}</Text>
+        <Text style={[tw`text-${size} leading-none font-bold self-start`, style]}>{header}</Text>
     )
 }

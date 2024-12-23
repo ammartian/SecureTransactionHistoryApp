@@ -1,5 +1,8 @@
 import * as LocalAuthentication from "expo-local-authentication";
 
+// TODO:
+// Test biometric using .ipa
+
 // User biometric authentication 
 export const authenticateUser = async (): Promise<boolean> => {
 
