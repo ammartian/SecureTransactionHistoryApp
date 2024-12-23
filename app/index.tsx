@@ -12,6 +12,7 @@ import tw from "twrnc";
 import { transactions as InitialTransactions } from "./data/transactions";
 import sortByLatestDate from "./utils/sortDate";
 import formatDate from "./utils/formatDate";
+import { useRouter } from "expo-router";
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList, View, Text, TouchableOpacity, RefreshControl } from "react-native";
@@ -19,8 +20,11 @@ import CustomHeader from "./components/CustomHeader";
 import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
 import authenticateUser from "./services/auth";
+import TransactionType from "./models/transaction-type";
 
 export default function TransactionHistoryScreen() {
+
+    const router = useRouter();
 
     const [isDisplayed, setIsDisplayed] = useState(false);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -57,6 +61,30 @@ export default function TransactionHistoryScreen() {
                 setIsDisplayed(true); // display info after authenticated
             }
         }
+    }
+
+    // Handle navigation to transaction detail
+    const handleTransactionDetailNavigation = async (transaction: TransactionType) => {
+        if (isAuthenticated) {
+            navigateToDetail(transaction); // navigate directly if authenticated
+        } else {
+            // authenticate if not
+            const authSuccess = await authenticateUserAndSetState();
+
+            if (authSuccess) {
+                navigateToDetail(transaction); // navigate after successful authentication
+            }
+        }
+    }
+
+    // Navigate to transaction detail screen
+    const navigateToDetail = (transaction: TransactionType) => {
+        // navigate
+        router.push({
+            pathname: "/TransactionDetailScreen",
+            params: { transaction: JSON.stringify(transaction) }
+        })
+        console.log("Navigated with props: ", transaction);
     }
 
     // Handle refresh
@@ -100,7 +128,8 @@ export default function TransactionHistoryScreen() {
                         renderItem={({ item, index }) => (
                             <TouchableOpacity
                                 style={tw`flex-1 flex-row justify-between p-5 ${index % 2 === 0 ? "bg-slate-50" : "bg-slate-100"}`}
-                                onPress={() => console.log("Pressed!")}>
+                                // Navigate to Transaction Detail
+                                onPress={() => handleTransactionDetailNavigation(item)}>
                                 <View style={tw`flex-col flex-wrap max-w-[50%]`}>
                                     <CustomHeader header={item.description} size="lg" style={tw`mt-0 mb-0`} />
                                     {item.type && (<Text>{item.type}</Text>)}
