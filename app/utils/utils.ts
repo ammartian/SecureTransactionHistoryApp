@@ -1,13 +1,12 @@
 import TransactionType from "../models/transaction-type";
 
 
-// Helper function to sort Data by descending order
+// Sort Data by descending order
 export const sortByLatestDate = (data: TransactionType[]): TransactionType[] => {
     return [...data].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };
 
-
-// Helper function to transform date format
+// Transform date format
 export const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const day = String(date.getDate()).padStart(2, '0'); // ensure it's always 2 digit
@@ -16,7 +15,7 @@ export const formatDate = (dateString: string) => {
     return `${day} ${month} ${year}`; // return re-arranged template literal 
 };
 
-// Helper function to set status title color
+// Set status title color
 export const setStatusColor = (status: string) => {
     switch (status) {
         case "Completed":
@@ -28,5 +27,10 @@ export const setStatusColor = (status: string) => {
         default:
             return "text-gray-500"; // Default color for unknown statuses
     }
+}
+
+// Set Direction Color
+export const setDirectionColor = (direction: string) => {
+    return direction === "Income" ? "text-green-500" : "text-red-500";
 }
 

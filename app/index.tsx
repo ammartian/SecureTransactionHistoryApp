@@ -7,16 +7,16 @@
 import React, { useState } from "react";
 import tw from "twrnc";
 import { transactions as InitialTransactions } from "./data/transactions";
-import { sortByLatestDate, formatDate } from "./utils/utils";
+import { sortByLatestDate, formatDate, setDirectionColor, setStatusColor } from "./utils/utils";
 import { useRouter } from "expo-router";
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList, View, Text, TouchableOpacity, RefreshControl } from "react-native";
 import CustomHeader from "./components/CustomHeader";
-import AntDesign from '@expo/vector-icons/AntDesign';
 import Entypo from '@expo/vector-icons/Entypo';
 import authenticateUser from "./services/auth";
 import TransactionType from "./models/transaction-type";
+import DirectionIcon from "./components/DirectionIcon";
 
 export default function TransactionHistoryScreen() {
 
@@ -73,14 +73,12 @@ export default function TransactionHistoryScreen() {
         }
     }
 
-    // Navigate to transaction detail screen
+    // Navigate to transaction detail screen with params
     const navigateToDetail = (transaction: TransactionType) => {
-        // navigate
         router.push({
             pathname: "/TransactionDetailScreen",
             params: { transaction: JSON.stringify(transaction) }
         })
-        console.log("Navigated with props: ", transaction);
     }
 
     // Handle refresh
@@ -116,25 +114,35 @@ export default function TransactionHistoryScreen() {
                 </View>
 
                 {/* FlatList */}
-                <View style={tw`border-2 border-slate-300 rounded-lg overflow-hidden`}>
+                <View style={tw`bg-white border-2 border-slate-300 rounded-lg overflow-hidden pb-8`}>
                     <FlatList
                         data={transactions}
                         keyExtractor={(item) => item.id}
                         ListEmptyComponent={<Text style={tw`text-center text-gray-500 p-4`}>No transaction available</Text>} // empty data fallback view
                         renderItem={({ item, index }) => (
                             <TouchableOpacity
-                                style={tw`flex-1 flex-row justify-between p-5 ${index % 2 === 0 ? "bg-slate-50" : "bg-slate-100"}`}
+                                style={tw`flex-1 flex-row justify-between px-5 py-4`}
                                 // Navigate to Transaction Detail
                                 onPress={() => handleTransactionDetailNavigation(item)}>
+
+                                {/* Transaction history details */}
                                 <View style={tw`flex-col flex-wrap max-w-[50%]`}>
-                                    <CustomHeader header={item.description} size="lg" style={tw`mb-1`} />
-                                    {item.paymentMethod && (<Text>{item.paymentMethod}</Text>)}
-                                    <Text>{formatDate(item.date)}</Text>
+                                    <View style={tw`flex-row items-center`}>
+                                        <CustomHeader header={item.description} size="lg" style={tw`pt-1`} />
+                                        <DirectionIcon direction={item.direction} size={24} style={tw`ml-1`} />
+                                    </View>
+                                    <Text style={tw`text-gray-500`}>{item.paymentMethod}</Text>
+                                    <Text style={tw`text-gray-500`}>{formatDate(item.date)}</Text>
                                 </View>
-                                <View style={tw`flex-col flex-wrap max-w-[50%] justify-between items-end`}>
+
+                                {/* Amount & Status */}
+                                <View style={tw`flex-col flex-wrap max-w-[50%] items-end pt-1`}>
                                     {/* Toggle amount visibility */}
-                                    <CustomHeader header={isDisplayed ? `RM ${item.amount}` : "RM ***"} size="base" />
-                                    <AntDesign name="right" size={16} style={tw`self-end text-slate-400`} />
+                                    <CustomHeader
+                                        header={isDisplayed ? `RM ${item.amount}` : "RM ***"}
+                                        size="base"
+                                        style={tw`self-end`} />
+                                    <Text style={tw`text-sm ${setStatusColor(item.status)}`}>{item.status}</Text>
                                 </View>
                             </TouchableOpacity>
                         )}
