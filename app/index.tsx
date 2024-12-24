@@ -10,12 +10,13 @@ import { sortByLatestDate, formatDate, setDirectionColor, setStatusColor } from 
 import { useRouter } from "expo-router";
 
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { FlatList, View, Text, TouchableOpacity, RefreshControl } from "react-native";
+import { FlatList, View, Text, TouchableOpacity, RefreshControl, Alert } from "react-native";
 import CustomHeader from "./components/CustomHeader";
 import Entypo from '@expo/vector-icons/Entypo';
 import authenticateUser from "./services/auth";
 import TransactionType from "./models/transaction-type";
 import DirectionIcon from "./components/DirectionIcon";
+import TransactionHistoryRow from "./components/TransactionHistoryRow";
 
 export default function TransactionHistoryScreen() {
 
@@ -35,11 +36,12 @@ export default function TransactionHistoryScreen() {
                 setIsAuthenticated(true);
                 return true;
             } else {
-                console.log("Authentication Failed");
+                Alert.alert("Authentication Failed", "Unable to authenticate user.");
                 return false;
             }
         } catch (error) {
             console.error("Authentication Error: ", error);
+            Alert.alert("Error", "An unexpected error occurred during authentication.");
             return false;
         }
     }
@@ -88,8 +90,12 @@ export default function TransactionHistoryScreen() {
         try {
             // Data fetch with 2s delay
             await new Promise((resolve) => setTimeout(resolve, 2000));
+
+            // Reload transactions
+            setTransactions(sortByLatestDate(InitialTransactions));
         } catch (error) {
             console.error("Error Fetching Data", error);
+            Alert.alert("Error", "Unable to refresh transactions.");
         } finally {
             setRefreshing(false); // stop loading animation
         }
@@ -117,31 +123,11 @@ export default function TransactionHistoryScreen() {
                         keyExtractor={(item) => item.id}
                         ListEmptyComponent={<Text style={tw`text-center text-gray-500 p-4`}>No transaction available</Text>} // empty data fallback view
                         renderItem={({ item }) => (
-                            <TouchableOpacity
-                                style={tw`flex-1 flex-row justify-between px-6 py-4`}
-                                // Navigate to Transaction Detail
-                                onPress={() => handleTransactionDetailNavigation(item)}>
-
-                                {/* Transaction history details */}
-                                <View style={tw`flex-col flex-wrap max-w-[50%]`}>
-                                    <View style={tw`flex-row items-center`}>
-                                        <CustomHeader header={item.description} size="lg" style={tw`pt-1`} />
-                                        <DirectionIcon direction={item.direction} size={24} style={tw`ml-1`} />
-                                    </View>
-                                    <Text style={tw`text-gray-500`}>{item.paymentMethod}</Text>
-                                    <Text style={tw`text-gray-500`}>{formatDate(item.date)}</Text>
-                                </View>
-
-                                {/* Amount & Status */}
-                                <View style={tw`flex-col flex-wrap max-w-[50%] items-end pt-1`}>
-                                    {/* Toggle amount visibility */}
-                                    <CustomHeader
-                                        header={isDisplayed ? `RM ${item.amount}` : "RM ***"}
-                                        size="base"
-                                        style={tw`self-end`} />
-                                    <Text style={tw`text-sm ${setStatusColor(item.status)}`}>{item.status}</Text>
-                                </View>
-                            </TouchableOpacity>
+                            <TransactionHistoryRow
+                                transaction={item}
+                                isDisplayed={isDisplayed}
+                                onPress={() => handleTransactionDetailNavigation(item)}
+                            />
                         )}
                         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                     />
