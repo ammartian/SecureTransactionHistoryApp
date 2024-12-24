@@ -6,7 +6,7 @@
 import React, { useState } from "react";
 import tw from "twrnc";
 import { transactions as InitialTransactions } from "./data/transactions";
-import { sortByLatestDate, formatDate, setDirectionColor, setStatusColor } from "./utils/utils";
+import { sortByLatestDate } from "./utils/utils";
 import { useRouter } from "expo-router";
 
 import { SafeAreaView } from 'react-native-safe-area-context';
