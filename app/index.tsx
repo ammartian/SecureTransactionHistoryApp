@@ -1,12 +1,9 @@
 // Transaction History Screen
 
-// TODO:
-// Last: Clean up code and improvise 
-
 import React, { useState } from "react";
 import tw from "twrnc";
 import { transactions as InitialTransactions } from "./data/transactions";
-import { sortByLatestDate } from "./utils/utils";
+import { sortByLatestDate } from "./utils/transactionUtils";
 import { useRouter } from "expo-router";
 
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -14,7 +11,7 @@ import { FlatList, View, Text, TouchableOpacity, RefreshControl, Alert } from "r
 import CustomHeader from "./components/CustomHeader";
 import Entypo from '@expo/vector-icons/Entypo';
 import authenticateUser from "./services/auth";
-import TransactionType from "./models/transaction-type";
+import TransactionType from "./models/TransactionType";
 import TransactionHistoryRow from "./components/TransactionHistoryRow";
 
 export default function TransactionHistoryScreen() {
@@ -35,7 +32,7 @@ export default function TransactionHistoryScreen() {
                 setIsAuthenticated(true);
                 return true;
             } else {
-                Alert.alert("Authentication Failed", "Unable to authenticate user.");
+                Alert.alert("Authentication Failed");
                 return false;
             }
         } catch (error) {

@@ -1,5 +1,4 @@
-import TransactionType from "../models/transaction-type";
-
+import TransactionType from "../models/TransactionType";
 
 // Sort Data by descending order
 export const sortByLatestDate = (data: TransactionType[]): TransactionType[] => {

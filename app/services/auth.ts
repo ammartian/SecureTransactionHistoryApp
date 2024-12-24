@@ -1,8 +1,5 @@
 import * as LocalAuthentication from "expo-local-authentication";
 
-// TODO:
-// Test biometric using .ipa
-
 // User biometric authentication 
 export const authenticateUser = async (): Promise<boolean> => {
 
@@ -25,9 +22,12 @@ export const authenticateUser = async (): Promise<boolean> => {
             return false;
         }
 
-        // Check supported biometrics type (debugging)
-        const supportedBiometric = await LocalAuthentication.supportedAuthenticationTypesAsync();
-        console.log("Supported Biometrics: ", supportedBiometric);
+        // Debug biometric auth
+        // Check supported biometrics type  
+        // const supportedBiometric = await LocalAuthentication.supportedAuthenticationTypesAsync();
+        // console.log("Supported Biometrics: ", supportedBiometric);
+        // 1: Finger Print
+        // 2: Facial Recognition
 
         // Perform authentication
         const result = await LocalAuthentication.authenticateAsync({

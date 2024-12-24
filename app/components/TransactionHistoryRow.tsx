@@ -2,8 +2,8 @@ import React from "react";
 import tw from "twrnc";
 import { TouchableOpacity, View, Text } from "react-native";
 import CustomHeader from "./CustomHeader";
-import DirectionIcon from "./DirectionIcon";
-import { setStatusColor, formatDate } from "../utils/utils";
+import TransactionDirectionIcon from "./TransactionDirectionIcon";
+import { setStatusColor, formatDate } from "../utils/transactionUtils";
 
 type TransactionRowProps = {
     transaction: {
@@ -30,7 +30,7 @@ export default function TransactionHistoryRow({ transaction, isDisplayed, onPres
             <View style={tw`flex-col flex-wrap max-w-[50%]`}>
                 <View style={tw`flex-row items-center`}>
                     <CustomHeader header={transaction.description} size="lg" style={tw`pt-1`} />
-                    <DirectionIcon direction={transaction.direction} size={24} style={tw`ml-1`} />
+                    <TransactionDirectionIcon direction={transaction.direction} size={24} style={tw`ml-1`} />
                 </View>
                 <Text style={tw`text-gray-500`}>{transaction.paymentMethod}</Text>
                 <Text style={tw`text-gray-500`}>{formatDate(transaction.date)}</Text>

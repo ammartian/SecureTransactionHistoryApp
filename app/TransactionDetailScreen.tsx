@@ -1,12 +1,12 @@
 import React from "react";
 import tw from "twrnc";
 import { useLocalSearchParams, useRouter } from "expo-router"
-import { formatDate, setStatusColor } from "./utils/utils";
+import { formatDate, setStatusColor } from "./utils/transactionUtils";
 
 import { View, Text, SafeAreaView, TouchableOpacity } from "react-native";
 import CustomHeader from "./components/CustomHeader";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import DirectionIcon from "./components/DirectionIcon";
+import TransactionDirectionIcon from "./components/TransactionDirectionIcon";
 import TransactionDetailRow from "./components/TransactionDetailRow";
 
 export default function TransactionDetailScreen() {
@@ -36,7 +36,7 @@ export default function TransactionDetailScreen() {
                         <View style={tw`self-start`}>
                             <View style={tw`flex-row`}>
                                 <CustomHeader header={`RM ${transactionData.amount}`} style={tw`text-4xl mr-2`} />
-                                <DirectionIcon direction={transactionData.direction} size={36} />
+                                <TransactionDirectionIcon direction={transactionData.direction} size={36} />
                             </View>
                             <View style={tw`flex-row w-full justify-between items-center`}>
                                 <Text style={tw`text-lg text-gray-500`}>{transactionData.direction}</Text>
