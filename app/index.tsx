@@ -1,6 +1,7 @@
 // Transaction History Screen
 
 import React, { useState } from "react";
+import { useAuth } from "./contexts/AuthContext";
 import tw from "twrnc";
 import { transactions as InitialTransactions } from "./data/transactions";
 import { sortByLatestDate } from "./utils/transactionUtils";
@@ -10,26 +11,26 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { FlatList, View, Text, TouchableOpacity, RefreshControl, Alert } from "react-native";
 import CustomHeader from "./components/CustomHeader";
 import Entypo from '@expo/vector-icons/Entypo';
-import authenticateUser from "./services/auth";
+import biometricAuth from "./services/biometricAuth";
 import TransactionType from "./models/TransactionType";
 import TransactionHistoryRow from "./components/TransactionHistoryRow";
 
 export default function TransactionHistoryScreen() {
 
     const router = useRouter();
+    const { isAuthenticated, login } = useAuth();
 
     const [isDisplayed, setIsDisplayed] = useState(false);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
     const [transactions, setTransactions] = useState(() => sortByLatestDate(InitialTransactions)) // sort data in descending order
 
     // Handle authentication
     const authenticateUserAndSetState = async () => {
         try {
-            const auth = await authenticateUser();
+            const auth = await biometricAuth();
 
             if (auth) {
-                setIsAuthenticated(true);
+                login();
                 return true;
             } else {
                 Alert.alert("Authentication Failed");

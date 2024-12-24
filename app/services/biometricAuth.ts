@@ -1,7 +1,7 @@
 import * as LocalAuthentication from "expo-local-authentication";
 
 // User biometric authentication 
-export const authenticateUser = async (): Promise<boolean> => {
+export const biometricAuth = async (): Promise<boolean> => {
 
     try {
         // Check if face or fingerprint scanner is available on device
@@ -43,4 +43,4 @@ export const authenticateUser = async (): Promise<boolean> => {
     }
 }
 
-export default authenticateUser;
+export default biometricAuth;
