@@ -15,7 +15,6 @@ import CustomHeader from "./components/CustomHeader";
 import Entypo from '@expo/vector-icons/Entypo';
 import authenticateUser from "./services/auth";
 import TransactionType from "./models/transaction-type";
-import DirectionIcon from "./components/DirectionIcon";
 import TransactionHistoryRow from "./components/TransactionHistoryRow";
 
 export default function TransactionHistoryScreen() {
@@ -109,7 +108,16 @@ export default function TransactionHistoryScreen() {
                 <View style={tw`flex flex-row w-full justify-between pt-8 px-4 pb-4`}>
                     <CustomHeader header="Transaction History" style={tw`pt-2`} />
                     <TouchableOpacity style={tw`flex-row items-center pr-4`} onPress={displaySensitiveInfo}>
-                        <View style={tw`px-7 py-2 bg-yellow-300 rounded-lg`}>
+                        <View style={[
+                            tw`px-7 py-2 bg-yellow-300 rounded-lg`,
+                            {
+                                shadowColor: '#000', // Shadow color for iOS
+                                shadowOffset: { width: 0, height: 2 }, // Shadow position
+                                shadowOpacity: 0.1, // Shadow opacity for iOS
+                                shadowRadius: 4, // Shadow blur radius for iOS
+                                elevation: 4, // Shadow effect for Android
+                            },
+                        ]}>
                             {/* Toggle icon */}
                             <Entypo name={isDisplayed ? "eye" : "eye-with-line"} size={16} color="black" />
                         </View>
@@ -117,7 +125,14 @@ export default function TransactionHistoryScreen() {
                 </View>
 
                 {/* FlatList */}
-                <View style={tw`w-full bg-white pb-16`}>
+                <View style={[tw`w-full bg-white pb-16`,
+                {
+                    shadowColor: '#000', // Shadow color for iOS
+                    shadowOffset: { width: 0, height: -2 }, // Top shadow
+                    shadowOpacity: 0.1, // Shadow opacity for iOS
+                    shadowRadius: 4, // Blur radius for iOS
+                    elevation: 4, // Shadow for Android
+                },]}>
                     <FlatList
                         data={transactions}
                         keyExtractor={(item) => item.id}
@@ -133,6 +148,6 @@ export default function TransactionHistoryScreen() {
                     />
                 </View>
             </View>
-        </SafeAreaView>
+        </SafeAreaView >
     );
 }
