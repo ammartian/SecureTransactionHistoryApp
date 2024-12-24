@@ -1,7 +1,6 @@
 // Transaction History Screen
 
 // TODO:
-// Update UI
 // Last: Clean up code and improvise 
 
 import React, { useState } from "react";
@@ -50,7 +49,7 @@ export default function TransactionHistoryScreen() {
         if (isAuthenticated) {
             setIsDisplayed((prevState) => !prevState); // toggle freely
         } else {
-            // authenticate if not
+            // authenticate and set state
             const authSuccess = await authenticateUserAndSetState();
 
             if (authSuccess) {
@@ -64,7 +63,7 @@ export default function TransactionHistoryScreen() {
         if (isAuthenticated) {
             navigateToDetail(transaction); // navigate directly if authenticated
         } else {
-            // authenticate if not
+            // authenticate and set state
             const authSuccess = await authenticateUserAndSetState();
 
             if (authSuccess) {
@@ -96,17 +95,15 @@ export default function TransactionHistoryScreen() {
         }
     }
 
-
     return (
-        <SafeAreaView style={tw`flex-1 items-center bg-slate-50`}>
-            <View style={tw`flex-1 w-100 px-4`}>
+        <SafeAreaView style={tw`flex-1 bg-stone-100`}>
+            <View style={tw`flex-1 items-center`}>
 
                 {/* Header and Button */}
-                <View style={tw`flex flex-row justify-between`}>
-                    <CustomHeader header="Transaction History" />
-
-                    <TouchableOpacity style={tw`flex-row items-center pb-4 pr-4`} onPress={displaySensitiveInfo}>
-                        <View style={tw`px-6 py-2 bg-gray-300 rounded-lg`}>
+                <View style={tw`flex flex-row w-full justify-between pt-8 px-4 pb-4`}>
+                    <CustomHeader header="Transaction History" style={tw`pt-2`} />
+                    <TouchableOpacity style={tw`flex-row items-center pr-4`} onPress={displaySensitiveInfo}>
+                        <View style={tw`px-7 py-2 bg-yellow-300 rounded-lg`}>
                             {/* Toggle icon */}
                             <Entypo name={isDisplayed ? "eye" : "eye-with-line"} size={16} color="black" />
                         </View>
@@ -114,14 +111,14 @@ export default function TransactionHistoryScreen() {
                 </View>
 
                 {/* FlatList */}
-                <View style={tw`bg-white border-2 border-slate-300 rounded-lg overflow-hidden pb-8`}>
+                <View style={tw`w-full bg-white pb-16`}>
                     <FlatList
                         data={transactions}
                         keyExtractor={(item) => item.id}
                         ListEmptyComponent={<Text style={tw`text-center text-gray-500 p-4`}>No transaction available</Text>} // empty data fallback view
-                        renderItem={({ item, index }) => (
+                        renderItem={({ item }) => (
                             <TouchableOpacity
-                                style={tw`flex-1 flex-row justify-between px-5 py-4`}
+                                style={tw`flex-1 flex-row justify-between px-6 py-4`}
                                 // Navigate to Transaction Detail
                                 onPress={() => handleTransactionDetailNavigation(item)}>
 
