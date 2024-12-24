@@ -1,10 +1,11 @@
-# Secure Transaction History Module
+# Secure Transaction History Module 🚀
 
 ## Description
 
+
 This repository contains my implementation of the Secure Transaction History Module as part of the take-home assignment for the Frontend Engineer role.
 
-**Note:** I was unable to test the biometric authentication on my personal device since I am developing on Windows and do not have access to an Android device.
+ **Note:** I was unable to test the biometric authentication on my personal device since I am developing on Windows and do not have access to an Android device. 😟
 
 ## Technologies Used
 
@@ -17,14 +18,13 @@ This repository contains my implementation of the Secure Transaction History Mod
 
 1. **User Authentication**
    - Biometric authentication (FaceID/Fingerprint) to ensure secure access.
+   
 2. **Transaction History**
-
    - Displays a list of recent transactions sorted by the latest date.
    - Sensitive data like transaction amounts is masked by default and able to be toggled via button.
    - Pull-to-refresh functionality to simulate reload transaction data.
 
 3. **Transaction Details**
-
    - Navigate to transaction detail screen by tapping a transaction.
    - View additional information like Activity and transaction ID.
 
@@ -70,7 +70,7 @@ app/
   TransactionDetailScreen.tsx # Transaction Detail screen
 ```
 
-## Challenges and Learnings
+## Challenges and Learnings 💪✨🧠
 
 1. **First Time Using React Native**: This was my first experience with React Native and mobile development.
 2. **Debugging**: I learned how to debug applications using React Native.
@@ -78,6 +78,6 @@ app/
 4. **Mobile UI Development**: Learned how to develop with React Native's UI components such as `View`, `TouchableOpacity`, and `FlatList`, which differ from web development.
 5. **Responsive UI Design**: Gained experience in creating responsive UIs for mobile applications.
 
-## Acknowledgments
+## Acknowledgments 🙌🤝👏🎉
 
-This project was developed as part of a take-home assessment for the Frontend Engineer position, and it was a very fun experience. I learned a lot from it. Special thanks to the team for the opportunity.
+This project was developed as part of a take-home assessment for the Frontend Engineer position, and it was a very fun experience. I learned a lot from it. Special thanks to the team for the opportunity! 🙏🎉
