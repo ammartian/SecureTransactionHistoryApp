@@ -1,50 +1,83 @@
-# Welcome to your Expo app 👋
+# Secure Transaction History Module
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Description
 
-## Get started
+This repository contains my implementation of the Secure Transaction History Module as part of the take-home assignment for the Frontend Engineer role.
 
-1. Install dependencies
+**Note:** I was unable to test the biometric authentication on my personal device since I am developing on Windows and do not have access to an Android device.
 
+## Technologies Used
+
+- **React Native** (with Expo)
+- **TypeScript**
+- **Expo Router** for file-based routing
+- **Tailwind CSS** (via `twrnc`) for styling
+
+## Features
+
+1. **User Authentication**
+   - Biometric authentication (FaceID/Fingerprint) to ensure secure access.
+2. **Transaction History**
+
+   - Displays a list of recent transactions sorted by the latest date.
+   - Sensitive data like transaction amounts is masked by default and able to be toggled via button.
+   - Pull-to-refresh functionality to simulate reload transaction data.
+
+3. **Transaction Details**
+
+   - Navigate to transaction detail screen by tapping a transaction.
+   - View additional information like Activity and transaction ID.
+
+4. **Error Handling**
+   - Handles, UI errors, authentication errors, data fetch errors, and other edge cases.
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/ammartian/SecureTransactionHistoryApp.git
+   ```
+2. Install dependencies:
    ```bash
    npm install
    ```
-
-2. Start the app
-
+3. Start the Expo server:
    ```bash
-    npx expo start
+   npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## Usage
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+1. Launch the app on your device or an emulator using Expo Go.
+2. On the **Transaction History** screen:
+   - View the list of transactions.
+   - Toggle sensitive information visibility with biometric authentication.
+   - Pull down to simulate refresh the list.
+3. Tap on any transaction to navigate to the **Transaction Details** screen.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Code Structure
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+app/
+  components/          # Reusable UI components
+  contexts/            # Contexts for managing state
+  data/                # Mock transaction data
+  models/              # Type definitions
+  services/            # Biometric authentication service
+  utils/               # Utility functions
+  _layout.tsx          # Root layout for navigation
+  index.tsx            # Transaction History screen
+  TransactionDetailScreen.tsx # Transaction Detail screen
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Challenges and Learnings
 
-## Learn more
+1. **First Time Using React Native**: This was my first experience with React Native and mobile development.
+2. **Debugging**: I learned how to debug applications using React Native.
+3. **Biometric Authentication**: Implemented biometric authentication for the first time.
+4. **Mobile UI Development**: Learned how to develop with React Native's UI components such as `View`, `TouchableOpacity`, and `FlatList`, which differ from web development.
+5. **Responsive UI Design**: Gained experience in creating responsive UIs for mobile applications.
 
-To learn more about developing your project with Expo, look at the following resources:
+## Acknowledgments
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+This project was developed as part of a take-home assessment for the Frontend Engineer position, and it was a very fun experience. I learned a lot from it. Special thanks to the team for the opportunity.
