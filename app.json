@@ -9,7 +9,8 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ammartian.SecureTransactionHistoryApp"
     },
     "android": {
       "adaptiveIcon": {
@@ -36,6 +37,14 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b84c58c8-a83c-4117-a392-c1d055b01ff4"
+      }
     }
   }
 }
